@@ -15,8 +15,12 @@ import com.blog.repositories.UserRepository;
 import com.blog.services.PostService;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 /**
@@ -59,37 +63,61 @@ public class PostServiceImpl implements PostService{
 
     @Override
     public PostDto updatePost(PostDto postDto, Integer postId) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+         Post post= this.postRepository.findById(postId).orElseThrow(()->new ResourceNotFoundException("Post","id",postId));
+         post.setTitle(postDto.getTitle());
+         post.setContent(postDto.getContent());
+//         post.setImageName(postDto.getImageName());
+       Post updatedPost=  this.postRepository.save(post);
+       return this.modelMapper.map(post, PostDto.class);
     }
 
     @Override
     public PostDto getPostById(Integer postId) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+      Post post= this.postRepository.findById(postId).orElseThrow(()->new ResourceNotFoundException("Post","id",postId));
+      return this.modelMapper.map(post,PostDto.class);
     }
 
     @Override
-    public List<PostDto> getAllPost() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public List<PostDto> getAllPost(Integer pageNumber,Integer pageSize) {
+        
+//        int pageSize=5;
+//        int pageNumber=1;
+//        
+      Pageable p=PageRequest.of(pageNumber, pageSize);
+        Page<Post> pagePost= this.postRepository.findAll(p);
+        List<Post> posts=pagePost.getContent();
+       List<PostDto> postDtos=posts.stream().map(post->this.modelMapper.map(post,PostDto.class)).collect(Collectors.toList());
+       return postDtos;
     }
 
     @Override
     public void deletePost(Integer postId) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+       Post post= this.postRepository.findById(postId).orElseThrow(()->new ResourceNotFoundException("Post","id",postId));
+        this.postRepository.delete(post);
     }
 
     @Override
     public List<PostDto> getPostByCategory(Integer categoryId) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        Category cat=this.categoryRepository.findById(categoryId).orElseThrow(()->new ResourceNotFoundException("Category","id",categoryId));
+        List<Post> posts=this.postRepository.findByCategory(cat);
+        List<PostDto> postDtos=posts.stream().map(post->this.modelMapper.map(post, PostDto.class)).collect(Collectors.toList());
+        return postDtos;
     }
 
     @Override
     public List<PostDto> getPostByUser(Integer userId) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+       User user=this.userRepository.findById(userId).orElseThrow(()->new ResourceNotFoundException("User","id",userId));
+       List<Post> posts=this.postRepository.findByUser(user);
+       
+       List<PostDto> postDtos=posts.stream().map(post->this.modelMapper.map(post,PostDto.class)).collect(Collectors.toList());
+       return postDtos;
     }
 
     @Override
     public List<PostDto> searchPosts(String keyword) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
+    
+    
     
 }
