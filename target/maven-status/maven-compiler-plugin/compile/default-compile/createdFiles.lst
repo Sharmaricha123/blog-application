@@ -20,3 +20,4 @@ com\blog\controllers\PostController.class
 com\blog\entities\Post.class
 com\blog\exceptions\ResourceNotFoundException.class
 com\blog\payloads\ApiResponse.class
+com\blog\payloads\PostResponse.class
