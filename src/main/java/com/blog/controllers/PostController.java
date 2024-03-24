@@ -26,6 +26,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  *
@@ -38,6 +39,10 @@ public class PostController {
     
     @Autowired
     private PostService postService;
+    
+    
+//    @Value("${project.image}")
+    private String path;
     
     @Autowired
     private FileService fileService;
@@ -107,4 +112,13 @@ public class PostController {
        List<PostDto> result= this.postService.searchPosts(keywords);
        return new ResponseEntity<>(result,HttpStatus.OK);
     }
+    
+    
+//    @PostMapping("/post/image/upload/{postId}")
+//    public ResponseEntity<ImageResponse> uploadPostImage(
+//    @RequestParam("image") MultipartFile image
+//    ){
+//        
+//    }
 }
+

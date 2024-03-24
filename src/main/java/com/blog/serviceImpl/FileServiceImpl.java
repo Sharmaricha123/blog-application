@@ -14,12 +14,14 @@ import java.net.FileNameMap;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.UUID;
+import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 /**
  *
  * @author Asus
  */
+@Service
 public class FileServiceImpl implements FileService {
 
     @Override

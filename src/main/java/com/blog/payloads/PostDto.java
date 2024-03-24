@@ -5,8 +5,11 @@
 package com.blog.payloads;
 
 import com.blog.entities.Category;
+import com.blog.entities.Comment;
 import com.blog.entities.User;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  *
@@ -27,6 +30,8 @@ public class PostDto {
     private CategoryDto category;
     
     private UserDto user;
+    
+    private Set<CommentDto> comments=new HashSet<>();
 
     public PostDto() {
     }
@@ -97,8 +102,15 @@ public class PostDto {
         this.user = user;
     }
 
-    
+    public Set<CommentDto> getComments() {
+        return comments;
+    }
 
-  
+    public void setComments(Set<CommentDto> comments) {
+        this.comments = comments;
+    }
+
+
+    
 
 }
