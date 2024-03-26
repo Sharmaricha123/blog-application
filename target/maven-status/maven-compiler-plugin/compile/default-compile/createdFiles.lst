@@ -10,6 +10,7 @@ com\blog\entities\User.class
 com\blog\entities\Comment.class
 com\blog\exceptions\GlobalExceptionHandler.class
 com\blog\controllers\PostController.class
+com\blog\entities\Role.class
 com\blog\entities\Post.class
 com\blog\exceptions\ResourceNotFoundException.class
 com\blog\payloads\PostResponse.class
@@ -25,8 +26,10 @@ com\blog\serviceImpl\PostServiceImpl.class
 com\blog\entities\Category.class
 com\blog\serviceImpl\CommentServiceImpl.class
 com\blog\payloads\PostDto.class
+com\blog\security\CustomUserDetailService.class
 com\blog\services\PostService.class
 com\blog\controllers\CommentController.class
 com\blog\payloads\CategoryDto.class
 com\blog\config\AppConstants.class
 com\blog\payloads\ApiResponse.class
+com\blog\config\SecurityConfig.class
